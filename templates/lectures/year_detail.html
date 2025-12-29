@@ -1,25 +1,99 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="mb-8 text-sm opacity-70">
-    <a href="{% url 'lectures:home' %}" class="hover:text-uni-gold">الرئيسية</a> > 
-    <a href="{% url 'lectures:faculty_detail' year.faculty.id %}" class="hover:text-uni-gold">{{ year.faculty.name }}</a> >
-    <span class="text-uni-gold">{{ year.name }}</span>
+
+<!-- 1. شريط التنقل (Breadcrumb) -->
+<nav class="flex mb-8" aria-label="Breadcrumb">
+    <ol class="inline-flex items-center space-x-1 md:space-x-3 space-x-reverse bg-white dark:bg-uni-darker px-4 py-2 rounded-full shadow-sm border border-gray-100 dark:border-gray-800 text-sm">
+        <li class="inline-flex items-center">
+            <a href="{% url 'lectures:home' %}" class="text-gray-500 hover:text-uni-gold transition-colors">الرئيسية</a>
+        </li>
+        <li>
+            <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+            <a href="{% url 'lectures:faculty_detail' year.faculty.id %}" class="text-gray-500 hover:text-uni-gold transition-colors mr-1">{{ year.faculty.name }}</a>
+        </li>
+        <li>
+            <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+            <span class="mr-1 font-medium text-uni-gold">{{ year.name }}</span>
+        </li>
+    </ol>
+</nav>
+
+<!-- 2. رأس الصفحة (Hero Section) -->
+<div class="relative bg-white dark:bg-uni-darker rounded-3xl p-8 mb-10 shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden text-center md:text-right">
+    <!-- خلفية جمالية -->
+    <div class="absolute top-0 left-0 w-64 h-64 bg-gradient-to-br from-uni-gold/20 to-transparent rounded-full blur-3xl -translate-x-16 -translate-y-16 pointer-events-none"></div>
+    
+    <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div>
+            <div class="flex items-center gap-2 justify-center md:justify-start text-uni-gold mb-2 font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.496 2.132a1 1 0 00-.992 0l-7 4A1 1 0 003 6.928V19a1 1 0 001 1h12a1 1 0 001-1V6.928a1 1 0 00.496-.868l-7-4zM8.75 16.5h2.5v-3.5h-2.5v3.5zm-5-8.17L10 4.71l6.25 3.62V16.5h-2.5v-4.75a1 1 0 00-1-1h-5.5a1 1 0 00-1 1v4.75h-2.5V8.33z" clip-rule="evenodd" />
+                </svg>
+                <span>{{ year.faculty.name }}</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">
+                المواد الدراسية - <span class="text-transparent bg-clip-text bg-gradient-to-l from-uni-gold to-yellow-500">{{ year.name }}</span>
+            </h1>
+            <p class="text-gray-500 dark:text-gray-400 mt-2 max-w-xl">
+                اختر المادة لتصفح المحاضرات والملفات المرفوعة.
+            </p>
+        </div>
+        
+        <!-- أيقونة زخرفية -->
+        <div class="hidden md:block text-8xl opacity-10 grayscale">
+            📚
+        </div>
+    </div>
 </div>
 
-<h1 class="text-3xl font-bold mb-8 border-b border-gray-700 pb-4">المواد الدراسية - {{ year.name }}</h1>
-
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- 3. شبكة المواد -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {% for subject in subjects %}
     <a href="{% url 'lectures:subject_detail' subject.id %}" 
-       class="flex items-center p-5 bg-uni-white dark:bg-uni-darker rounded-lg shadow hover:border-r-4 hover:border-uni-gold transition-all">
-        <div class="h-10 w-10 bg-uni-gold rounded-full flex items-center justify-center text-white ml-4 font-bold">
+       class="group relative bg-white dark:bg-uni-darker rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-100 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 flex items-center gap-5 overflow-hidden">
+        
+        <!-- تأثير اللمعان الخلفي -->
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+
+        <!-- دائرة الحرف الأول (Avatar) -->
+        <div class="relative flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-uni-gold to-yellow-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-uni-gold/30 group-hover:scale-110 transition-transform duration-300">
             {{ subject.name|slice:":1" }}
+            <!-- زخرفة صغيرة -->
+            <div class="absolute top-0 right-0 w-4 h-4 bg-white/20 rounded-bl-xl"></div>
         </div>
-        <span class="text-lg font-bold">{{ subject.name }}</span>
+
+        <!-- تفاصيل المادة -->
+        <div class="flex-grow">
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-uni-gold transition-colors line-clamp-1" title="{{ subject.name }}">
+                {{ subject.name }}
+            </h3>
+            <div class="flex items-center gap-1 text-xs text-gray-400 mt-1">
+                <span>عرض المحاضرات</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- سهم جانبي -->
+        <div class="text-gray-300 dark:text-gray-600 group-hover:text-uni-gold transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </div>
+
     </a>
     {% empty %}
-    <p class="col-span-full text-center opacity-70">لا توجد مواد مضافة.</p>
+    <!-- حالة عدم وجود مواد -->
+    <div class="col-span-full flex flex-col items-center justify-center py-16 bg-white dark:bg-uni-darker rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-700">
+        <div class="w-20 h-20 bg-gray-50 dark:bg-[#122540] rounded-full flex items-center justify-center text-4xl mb-4 grayscale opacity-50">
+            📖
+        </div>
+        <h3 class="text-lg font-bold text-gray-700 dark:text-gray-300">لا توجد مواد مضافة</h3>
+        <p class="text-sm text-gray-500 mt-1">لم يتم إضافة مواد دراسية لهذه السنة بعد.</p>
+    </div>
     {% endfor %}
 </div>
+
 {% endblock %}

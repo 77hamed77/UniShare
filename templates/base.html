@@ -5,10 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}UniShare{% endblock %}</title>
+
     
     <!-- استدعاء Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+    <link rel="icon" href="{% static 'images/logo_dark_haf.png' %}" type="image/svg+xml">
+    <!-- مكتبة Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- إعدادات الثيم والألوان -->
     <script>
         tailwind.config = {
@@ -62,10 +65,7 @@
                 <!-- الشعار -->
                 <a href="{% url 'lectures:home' %}" class="group flex items-center gap-2 transition-transform hover:scale-105">
                     <div class="w-10 h-10 bg-gradient-to-br from-uni-gold to-yellow-600 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:shadow-glow transition-all">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                        </svg>
+                        <img src="{% static 'images/logo_dark_haf.png' %}" alt="UniShare Logo" class="w-8 h-9">
                     </div>
                     <span class="text-2xl font-extrabold tracking-wide text-gray-800 dark:text-white">
                         Uni<span class="text-uni-gold">Share</span>
@@ -135,12 +135,12 @@
                 </div>
                 <div class="flex gap-4">
                     <a href="https://www.facebook.com/SHAM.UNIV?locale=ar_AR" class="text-gray-400 hover:text-uni-gold transition"><span class="sr-only">Facebook</span><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-uni-gold transition"><span class="sr-only">Instagram</span><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-uni-gold transition"><span class="sr-only">University SHAM</span><img src="/static/images/university_logo.png" alt="University Logo" class="h-5 w-5"></a>
+                    <a href="https://www.instagram.com/unvalsham/" class="text-gray-400 hover:text-uni-gold transition"><span class="sr-only">Instagram</span><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://isu.edu.sy/home" class="text-gray-400 hover:text-uni-gold transition"><span class="sr-only">University SHAM</span><img src="{% static 'images/logo_dark_haf.png' %}" alt="University Logo" class="h-5 w-5"></a>
                 </div>
             </div>
             <div class="text-center mt-8 pt-4 border-t border-gray-100 dark:border-gray-800 text-xs text-gray-400">
-                &copy; 2025 UniShare. Made with ❤️ for Students.
+                &copy; 2026 UniShare. Made with ❤️ for <a href="https://www.linkedin.com/in/hamidmuhammad/" class="text-uni-gold hover:underline">Hamid Almurai</a>.
             </div>
         </div>
     </footer>

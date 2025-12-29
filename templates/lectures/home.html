@@ -1,61 +1,76 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- قسم المقدمة (Hero Section) -->
-<div class="relative py-16 md:py-24 text-center overflow-hidden">
-    <!-- خلفية زخرفية خفيفة -->
-    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-full opacity-10 pointer-events-none">
-        <div class="absolute top-10 left-10 w-64 h-64 bg-uni-gold rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-        <div class="absolute top-10 right-10 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+<!-- استدعاء مكتبة AOS للأنيميشن عند السكرول -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<!-- قسم المقدمة (Hero Section) مع تأثيرات Parallax -->
+<div class="relative py-20 md:py-32 text-center overflow-hidden" id="hero-section">
+    <!-- خلفية تفاعلية تتحرك مع الماوس -->
+    <div class="absolute inset-0 w-full h-full pointer-events-none">
+        <!-- كرات ملونة (Blobs) -->
+        <div class="absolute top-10 left-10 w-72 h-72 bg-uni-gold/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob" data-speed="2"></div>
+        <div class="absolute bottom-10 right-10 w-72 h-72 bg-blue-500/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" data-speed="-2"></div>
+        
+        <!-- شبكة نقاط خلفية (Grid Pattern) -->
+        <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]" 
+             style="background-image: radial-gradient(#b9955c 1px, transparent 1px); background-size: 30px 30px;">
+        </div>
     </div>
 
-    <div class="relative z-10 max-w-3xl mx-auto px-4">
-        <span class="inline-block py-1 px-3 rounded-full bg-uni-gold/10 text-uni-gold text-sm font-bold mb-4 border border-uni-gold/20">
-            🚀 منصة تعليمية مفتوحة للجميع
-        </span>
-        <h1 class="text-5xl md:text-6xl font-extrabold mb-6 text-gray-900 dark:text-white leading-tight">
+    <div class="relative z-10 max-w-4xl mx-auto px-4">
+        <div data-aos="fade-down" data-aos-duration="1000">
+            <span class="inline-block py-1 px-3 rounded-full bg-uni-gold/10 text-uni-gold text-sm font-bold mb-6 border border-uni-gold/20 hover:scale-105 transition-transform cursor-default">
+                🚀 منصة تعليمية مفتوحة للجميع
+            </span>
+        </div>
+        
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 text-gray-900 dark:text-white leading-tight" data-aos="zoom-in" data-aos-delay="200">
             شارك وتعلم مع <br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-uni-gold to-yellow-400">UniShare</span>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-uni-gold via-yellow-400 to-uni-gold bg-300% animate-gradient">UniShare</span>
         </h1>
-        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+        
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="400">
             الوصول للمحاضرات الجامعية لم يكن أسهل من قبل. تصفح، حمل، وشارك المعرفة مع زملائك بضغطة زر واحدة.
         </p>
         
         <!-- أزرار تفاعلية -->
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="#faculties" class="px-8 py-3 rounded-full bg-uni-gold hover:bg-yellow-600 text-white font-bold shadow-lg shadow-uni-gold/30 transition transform hover:-translate-y-1">
-                تصفح الكليات
+        <div class="flex flex-col sm:flex-row justify-center gap-4" data-aos="fade-up" data-aos-delay="600">
+            <a href="#faculties" class="group relative px-8 py-3 rounded-full bg-uni-gold text-white font-bold shadow-lg shadow-uni-gold/30 overflow-hidden transition-all hover:-translate-y-1 hover:shadow-xl">
+                <span class="relative z-10">تصفح الكليات</span>
+                <div class="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-150 group-hover:bg-yellow-600"></div>
             </a>
-            <a href="{% url 'lectures:search' %}" class="px-8 py-3 rounded-full bg-white dark:bg-uni-darker text-gray-800 dark:text-white border border-gray-200 dark:border-gray-700 font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+            <a href="{% url 'lectures:search' %}" class="px-8 py-3 rounded-full bg-white dark:bg-uni-darker text-gray-800 dark:text-white border border-gray-200 dark:border-gray-700 font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition transform hover:-translate-y-1">
                 بحث متقدم
             </a>
         </div>
     </div>
 </div>
 
-<!-- قسم الإحصائيات السريعة (تجميلي) -->
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20 border-y border-gray-200 dark:border-gray-800 py-8 bg-white/50 dark:bg-uni-darker/30 backdrop-blur-sm">
-    <div class="text-center">
-        <div class="text-3xl font-bold text-uni-gold mb-1">+10</div>
+<!-- قسم الإحصائيات السريعة -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20 border-y border-gray-200 dark:border-gray-800 py-10 bg-white/50 dark:bg-uni-darker/30 backdrop-blur-sm relative z-20">
+    <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+        <div class="text-4xl font-bold text-uni-gold mb-1 counter" data-target="10">0</div>
         <div class="text-sm text-gray-500">كليات مدعومة</div>
     </div>
-    <div class="text-center">
-        <div class="text-3xl font-bold text-uni-gold mb-1">∞</div>
+    <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+        <div class="text-4xl font-bold text-uni-gold mb-1">∞</div>
         <div class="text-sm text-gray-500">تحميل مجاني</div>
     </div>
-    <div class="text-center">
-        <div class="text-3xl font-bold text-uni-gold mb-1">24/7</div>
+    <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+        <div class="text-4xl font-bold text-uni-gold mb-1">24/7</div>
         <div class="text-sm text-gray-500">متاح دائماً</div>
     </div>
-    <div class="text-center">
-        <div class="text-3xl font-bold text-uni-gold mb-1">100%</div>
+    <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+        <div class="text-4xl font-bold text-uni-gold mb-1">100%</div>
         <div class="text-sm text-gray-500">روابط آمنة</div>
     </div>
 </div>
 
 <!-- قسم الكليات -->
-<div id="faculties" class="mb-12">
-    <div class="flex items-center justify-between mb-8">
+<div id="faculties" class="mb-12 relative">
+    <div class="flex items-center justify-between mb-10" data-aos="fade-right">
         <h2 class="text-3xl font-bold flex items-center gap-3">
             <span class="w-2 h-8 bg-uni-gold rounded-full"></span>
             الكليات المتاحة
@@ -63,56 +78,127 @@
     </div>
 
     {% if faculties %}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000">
             {% for faculty in faculties %}
-            <a href="{% url 'lectures:faculty_detail' faculty.id %}" 
-               class="group relative bg-white dark:bg-uni-darker p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-800 hover:border-uni-gold/50 flex flex-col h-full overflow-hidden">
-                
-                <!-- زخرفة خلفية في البطاقة -->
-                <div class="absolute top-0 right-0 w-24 h-24 bg-uni-gold/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+            <!-- إضافة خاصية Tilt للبطاقات -->
+            <div data-aos="zoom-in-up" data-aos-delay="{{ forloop.counter|add:'0' }}00">
+                <a href="{% url 'lectures:faculty_detail' faculty.id %}" 
+                   class="tilt-card block group relative bg-white dark:bg-uni-darker p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-800 h-full overflow-hidden transform-style-3d">
+                    
+                    <!-- تأثير اللمعان (Glare Effect) سيتم إضافته بواسطة JS -->
+                    
+                    <!-- زخرفة خلفية -->
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-uni-gold/10 to-transparent rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-125 duration-500"></div>
 
-                <div class="flex items-start justify-between mb-4 relative z-10">
-                    <div class="w-12 h-12 rounded-xl bg-uni-gold/10 text-uni-gold flex items-center justify-center text-2xl group-hover:bg-uni-gold group-hover:text-white transition-colors duration-300">
-                        🏛️
+                    <div class="flex items-start justify-between mb-6 relative z-10 transform translate-z-20">
+                        <div class="w-14 h-14 rounded-2xl bg-uni-gold/10 text-uni-gold flex items-center justify-center text-3xl group-hover:bg-uni-gold group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-uni-gold/50">
+                            🏛️
+                        </div>
+                        <span class="text-gray-300 group-hover:text-uni-gold transition-colors duration-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                        </span>
                     </div>
-                    <span class="text-gray-300 group-hover:text-uni-gold transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                        </svg>
-                    </span>
-                </div>
-                
-                <h3 class="text-xl font-bold mb-2 group-hover:text-uni-gold transition-colors relative z-10">{{ faculty.name }}</h3>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-auto relative z-10">
-                    اضغط لتصفح السنوات والمواد الدراسية
-                </p>
-            </a>
+                    
+                    <h3 class="text-2xl font-bold mb-3 group-hover:text-uni-gold transition-colors relative z-10 transform translate-z-10">{{ faculty.name }}</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-auto relative z-10 transform translate-z-10 opacity-80 group-hover:opacity-100 transition-opacity">
+                        اضغط لتصفح السنوات والمواد الدراسية
+                    </p>
+                </a>
+            </div>
             {% endfor %}
         </div>
     {% else %}
-        <!-- حالة عدم وجود بيانات -->
-        <div class="text-center py-16 bg-white dark:bg-uni-darker rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-700">
-            <div class="text-6xl mb-4 opacity-50">📭</div>
+        <div class="text-center py-16 bg-white dark:bg-uni-darker rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-700" data-aos="fade-up">
+            <div class="text-6xl mb-4 opacity-50 animate-bounce">📭</div>
             <h3 class="text-xl font-bold mb-2">لا توجد كليات مضافة حالياً</h3>
             <p class="text-gray-500">يرجى الانتظار حتى يقوم المشرف بإضافة البيانات.</p>
         </div>
     {% endif %}
 </div>
 
-<!-- إضافة ستايل للأنيميشن الخلفي -->
+<!-- استدعاء مكتبة VanillaTilt للتأثير ثلاثي الأبعاد -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+
 <style>
+    /* أنيميشن النص المتدرج */
+    .bg-300% { background-size: 300% auto; }
+    @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    .animate-gradient { animation: gradient 4s ease infinite; }
+
+    /* أنيميشن الكرات الخلفية */
     @keyframes blob {
         0% { transform: translate(0px, 0px) scale(1); }
         33% { transform: translate(30px, -50px) scale(1.1); }
         66% { transform: translate(-20px, 20px) scale(0.9); }
         100% { transform: translate(0px, 0px) scale(1); }
     }
-    .animate-blob {
-        animation: blob 7s infinite;
-    }
-    .animation-delay-2000 {
-        animation-delay: 2s;
-    }
+    .animate-blob { animation: blob 10s infinite alternate; }
+    .animation-delay-2000 { animation-delay: 2s; }
+
+    /* إعدادات Tilt 3D */
+    .transform-style-3d { transform-style: preserve-3d; }
+    .translate-z-10 { transform: translateZ(20px); }
+    .translate-z-20 { transform: translateZ(40px); }
 </style>
+
+<script>
+    // 1. تشغيل مكتبة AOS (Scroll Animation)
+    AOS.init({
+        once: true, // الحركة تحدث مرة واحدة فقط
+        offset: 100, // المسافة قبل بدء الحركة
+        easing: 'ease-out-cubic',
+    });
+
+    // 2. تشغيل مكتبة VanillaTilt (Mouse 3D Hover)
+    VanillaTilt.init(document.querySelectorAll(".tilt-card"), {
+        max: 15,          // زاوية الميلان
+        speed: 400,       // سرعة الحركة
+        glare: true,      // تفعيل اللمعان
+        "max-glare": 0.2, // شدة اللمعان
+        scale: 1.05       // التكبير عند التحويم
+    });
+
+    // 3. أنيميشن الخلفية التفاعلية (Parallax Mouse Move)
+    document.addEventListener("mousemove", parallax);
+    function parallax(e) {
+        document.querySelectorAll(".animate-blob").forEach(function(move){
+            var moving_value = move.getAttribute("data-speed");
+            var x = (e.clientX * moving_value) / 100;
+            var y = (e.clientY * moving_value) / 100;
+            move.style.transform = "translateX(" + x + "px) translateY(" + y + "px)";
+        });
+    }
+
+    // 4. عداد الأرقام (Counter Animation)
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+        const updateCount = () => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            const inc = target / 200; // سرعة العد
+
+            if (count < target) {
+                counter.innerText = Math.ceil(count + inc);
+                setTimeout(updateCount, 20);
+            } else {
+                counter.innerText = "+" + target;
+            }
+        };
+        // تشغيل العداد فقط عندما يظهر في الشاشة
+        let observer = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting){
+                updateCount();
+                observer.disconnect();
+            }
+        });
+        observer.observe(counter);
+    });
+</script>
 
 {% endblock %}
