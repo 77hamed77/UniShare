@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- قسم المقدمة (Hero Section) -->
+<div class="relative py-16 md:py-24 text-center overflow-hidden">
+    <!-- خلفية زخرفية خفيفة -->
+    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-full h-full opacity-10 pointer-events-none">
+        <div class="absolute top-10 left-10 w-64 h-64 bg-uni-gold rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+        <div class="absolute top-10 right-10 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+    </div>
+
+    <div class="relative z-10 max-w-3xl mx-auto px-4">
+        <span class="inline-block py-1 px-3 rounded-full bg-uni-gold/10 text-uni-gold text-sm font-bold mb-4 border border-uni-gold/20">
+            🚀 منصة تعليمية مفتوحة للجميع
+        </span>
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-6 text-gray-900 dark:text-white leading-tight">
+            شارك وتعلم مع <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-uni-gold to-yellow-400">UniShare</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+            الوصول للمحاضرات الجامعية لم يكن أسهل من قبل. تصفح، حمل، وشارك المعرفة مع زملائك بضغطة زر واحدة.
+        </p>
+        
+        <!-- أزرار تفاعلية -->
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#faculties" class="px-8 py-3 rounded-full bg-uni-gold hover:bg-yellow-600 text-white font-bold shadow-lg shadow-uni-gold/30 transition transform hover:-translate-y-1">
+                تصفح الكليات
+            </a>
+            <a href="{% url 'lectures:search' %}" class="px-8 py-3 rounded-full bg-white dark:bg-uni-darker text-gray-800 dark:text-white border border-gray-200 dark:border-gray-700 font-bold hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                بحث متقدم
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- قسم الإحصائيات السريعة (تجميلي) -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20 border-y border-gray-200 dark:border-gray-800 py-8 bg-white/50 dark:bg-uni-darker/30 backdrop-blur-sm">
+    <div class="text-center">
+        <div class="text-3xl font-bold text-uni-gold mb-1">+10</div>
+        <div class="text-sm text-gray-500">كليات مدعومة</div>
+    </div>
+    <div class="text-center">
+        <div class="text-3xl font-bold text-uni-gold mb-1">∞</div>
+        <div class="text-sm text-gray-500">تحميل مجاني</div>
+    </div>
+    <div class="text-center">
+        <div class="text-3xl font-bold text-uni-gold mb-1">24/7</div>
+        <div class="text-sm text-gray-500">متاح دائماً</div>
+    </div>
+    <div class="text-center">
+        <div class="text-3xl font-bold text-uni-gold mb-1">100%</div>
+        <div class="text-sm text-gray-500">روابط آمنة</div>
+    </div>
+</div>
+
+<!-- قسم الكليات -->
+<div id="faculties" class="mb-12">
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-3xl font-bold flex items-center gap-3">
+            <span class="w-2 h-8 bg-uni-gold rounded-full"></span>
+            الكليات المتاحة
+        </h2>
+    </div>
+
+    {% if faculties %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for faculty in faculties %}
+            <a href="{% url 'lectures:faculty_detail' faculty.id %}" 
+               class="group relative bg-white dark:bg-uni-darker p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-800 hover:border-uni-gold/50 flex flex-col h-full overflow-hidden">
+                
+                <!-- زخرفة خلفية في البطاقة -->
+                <div class="absolute top-0 right-0 w-24 h-24 bg-uni-gold/5 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+
+                <div class="flex items-start justify-between mb-4 relative z-10">
+                    <div class="w-12 h-12 rounded-xl bg-uni-gold/10 text-uni-gold flex items-center justify-center text-2xl group-hover:bg-uni-gold group-hover:text-white transition-colors duration-300">
+                        🏛️
+                    </div>
+                    <span class="text-gray-300 group-hover:text-uni-gold transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                    </span>
+                </div>
+                
+                <h3 class="text-xl font-bold mb-2 group-hover:text-uni-gold transition-colors relative z-10">{{ faculty.name }}</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-auto relative z-10">
+                    اضغط لتصفح السنوات والمواد الدراسية
+                </p>
+            </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- حالة عدم وجود بيانات -->
+        <div class="text-center py-16 bg-white dark:bg-uni-darker rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-700">
+            <div class="text-6xl mb-4 opacity-50">📭</div>
+            <h3 class="text-xl font-bold mb-2">لا توجد كليات مضافة حالياً</h3>
+            <p class="text-gray-500">يرجى الانتظار حتى يقوم المشرف بإضافة البيانات.</p>
+        </div>
+    {% endif %}
+</div>
+
+<!-- إضافة ستايل للأنيميشن الخلفي -->
+<style>
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob {
+        animation: blob 7s infinite;
+    }
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mb-8 text-sm opacity-70">
+    <a href="{% url 'lectures:home' %}" class="hover:text-uni-gold">الرئيسية</a> > 
+    <a href="{% url 'lectures:faculty_detail' year.faculty.id %}" class="hover:text-uni-gold">{{ year.faculty.name }}</a> >
+    <span class="text-uni-gold">{{ year.name }}</span>
+</div>
+
+<h1 class="text-3xl font-bold mb-8 border-b border-gray-700 pb-4">المواد الدراسية - {{ year.name }}</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {% for subject in subjects %}
+    <a href="{% url 'lectures:subject_detail' subject.id %}" 
+       class="flex items-center p-5 bg-uni-white dark:bg-uni-darker rounded-lg shadow hover:border-r-4 hover:border-uni-gold transition-all">
+        <div class="h-10 w-10 bg-uni-gold rounded-full flex items-center justify-center text-white ml-4 font-bold">
+            {{ subject.name|slice:":1" }}
+        </div>
+        <span class="text-lg font-bold">{{ subject.name }}</span>
+    </a>
+    {% empty %}
+    <p class="col-span-full text-center opacity-70">لا توجد مواد مضافة.</p>
+    {% endfor %}
+</div>
+{% endblock %}

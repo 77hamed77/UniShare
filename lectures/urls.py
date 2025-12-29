@@ -20,4 +20,7 @@ urlpatterns = [
     
     # رابط التحميل (التوجيه)
     path('download/<int:lecture_id>/', views.lecture_download, name='lecture_download'),
+    # رابط البحث
+    path('search/', views.search, name='search'),
+
 ]

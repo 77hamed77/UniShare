@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- 1. شريط التنقل (Breadcrumbs) المحسن -->
+<nav class="flex mb-8" aria-label="Breadcrumb">
+    <ol class="inline-flex items-center space-x-1 md:space-x-3 space-x-reverse bg-white dark:bg-uni-darker px-4 py-2 rounded-full shadow-sm border border-gray-100 dark:border-gray-800">
+        <li class="inline-flex items-center">
+            <a href="{% url 'lectures:home' %}" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-uni-gold transition-colors">
+                <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                الرئيسية
+            </a>
+        </li>
+        <li>
+            <div class="flex items-center">
+                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                <span class="mr-1 text-sm font-medium text-uni-gold md:ml-2">{{ faculty.name }}</span>
+            </div>
+        </li>
+    </ol>
+</nav>
+
+<!-- 2. رأس الصفحة (Header) -->
+<div class="relative mb-12 text-center">
+    <div class="inline-block p-3 rounded-full bg-uni-gold/10 text-uni-gold mb-4 text-3xl shadow-inner">
+        🏛️
+    </div>
+    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+        {{ faculty.name }}
+    </h1>
+    <p class="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+        اختر السنة الدراسية للوصول إلى المواد والمحاضرات الخاصة بها
+    </p>
+    <!-- خط زخرفي -->
+    <div class="w-24 h-1.5 bg-gradient-to-r from-transparent via-uni-gold to-transparent mx-auto mt-6 rounded-full opacity-70"></div>
+</div>
+
+<!-- 3. شبكة السنوات الدراسية -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    {% for year in years %}
+    <a href="{% url 'lectures:year_detail' year.id %}" 
+       class="group relative bg-white dark:bg-uni-darker rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-100 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+        
+        <!-- شريط جانبي ملون -->
+        <div class="absolute top-0 right-0 w-1.5 h-full bg-gray-200 dark:bg-gray-700 group-hover:bg-uni-gold transition-colors duration-300"></div>
+        
+        <!-- خلفية أيقونة شفافة كبيرة -->
+        <div class="absolute -bottom-4 -left-4 text-9xl opacity-5 dark:opacity-[0.03] group-hover:scale-110 transition-transform duration-500 pointer-events-none font-bold">
+            {{ forloop.counter }}
+        </div>
+
+        <div class="flex items-center justify-between mb-4">
+            <!-- أيقونة المجلد -->
+            <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-[#122540] text-uni-gold flex items-center justify-center text-2xl group-hover:bg-uni-gold group-hover:text-white transition-colors duration-300 shadow-sm">
+                📂
+            </div>
+            
+            <!-- سهم الدخول -->
+            <div class="w-8 h-8 rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-400 group-hover:border-uni-gold group-hover:text-uni-gold transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:translate-x-[-2px] transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+            </div>
+        </div>
+
+        <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100 group-hover:text-uni-gold transition-colors">
+            {{ year.name }}
+        </h3>
+        
+        <p class="text-sm text-gray-400 mt-2 flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full bg-green-500"></span>
+            متاح للتحميل
+        </p>
+    </a>
+    {% empty %}
+        <!-- حالة عدم وجود بيانات -->
+        <div class="col-span-full flex flex-col items-center justify-center py-16 bg-white dark:bg-uni-darker rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-700">
+            <div class="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center text-4xl mb-4 text-gray-400">
+                📅
+            </div>
+            <h3 class="text-lg font-bold text-gray-600 dark:text-gray-300">لا توجد سنوات دراسية مضافة</h3>
+            <p class="text-sm text-gray-400 mt-2">لم يتم إضافة سنوات لهذه الكلية بعد.</p>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

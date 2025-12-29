@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Faculty, AcademicYear, Subject, Lecture
-
+from django.db.models import Q 
 # 1. الصفحة الرئيسية: تعرض قائمة الكليات
 def home(request):
     faculties = Faculty.objects.all()
@@ -53,3 +53,21 @@ def lecture_download(request, lecture_id):
     
     # توجيه مباشر لرابط الدرايف
     return redirect(lecture.drive_link)
+
+def search(request):
+    query = request.GET.get('q') # الكلمة التي كتبها المستخدم
+    results = []
+    
+    if query:
+        # البحث في عنوان المحاضرة أو وصفها أو اسم المادة
+        results = Lecture.objects.filter(
+            Q(title__icontains=query) | 
+            Q(description__icontains=query) |
+            Q(subject__name__icontains=query)
+        )
+    
+    context = {
+        'results': results,
+        'query': query
+    }
+    return render(request, 'lectures/search_results.html', context)
